@@ -1,0 +1,9 @@
+{
+  "platformName": "Android",
+  "platformVersion": "12.0",
+  "deviceName": "Pixel_4",
+  "app": "/path/to/app.apk",
+  "automationName": "UiAutomator2",
+  "isHeadless": true,
+  "timeout": 30
+}

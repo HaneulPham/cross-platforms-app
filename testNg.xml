@@ -1,0 +1,17 @@
+<suite name="Parallel Suite" parallel="tests" thread-count="2">
+    <listeners>
+        <listener class-name="utils.RetryListener" />
+    </listeners>
+    <test name="Android Tests">
+        <parameter name="platform" value="android" />
+        <classes>
+            <class name="tests.LoginTest" />
+        </classes>
+    </test>
+    <test name="iOS Tests">
+        <parameter name="platform" value="ios" />
+        <classes>
+            <class name="tests.LoginTest" />
+        </classes>
+    </test>
+</suite>
