@@ -1,7 +1,14 @@
 <suite name="Parallel Suite" parallel="tests" thread-count="2">
     <listeners>
         <listener class-name="utils.RetryListener" />
+        <listener class-name="listeners.TestListener" />
+        <listener class-name="listeners.VideoRecordingListener"/>
     </listeners>
+    <test name="Video Recording Tests">
+        <classes>
+            <classess name="tests.VideoRecordingTest" />
+        </classes>
+    </test>
     <test name="Android Tests">
         <parameter name="platform" value="android" />
         <classes>

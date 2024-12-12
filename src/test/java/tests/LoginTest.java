@@ -3,6 +3,7 @@ package tests;
 import io.appium.java_client.AppiumDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 import utils.CapabilitiesLoader;
 
 import java.net.MalformedURLException;
@@ -25,4 +26,7 @@ public class LoginTest {
             throw new RuntimeException("Invalid URL for Appium server: " + e.getMessage());
         }
     }
+
+
+
 }
