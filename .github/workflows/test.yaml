@@ -1,0 +1,78 @@
+name: Enhanced Appium Test Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java-version: ['23', '17'] # Test with multiple Java versions
+        node-version: ['18', '16'] # Test with multiple Node.js versions
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Java (Matrix)
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java-version }}
+          distribution: 'temurin'
+          cache: gradle # Cache dependencies for Gradle
+
+      # Step 3: Set up Node.js (Matrix)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      # Step 4: Install Appium
+      - name: Install Appium
+        run: npm install -g appium
+
+      # Step 5: Start Appium Server
+      - name: Start Appium Server
+        run: appium --port 4723 &
+
+      # Step 6: Install Maven Dependencies
+      - name: Install Maven Dependencies
+        run: mvn clean install -DskipTests
+
+      # Step 7: Run Tests
+      - name: Run Tests
+        run: mvn test
+      # Step 8: Upload Test Reports as Artifacts
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-reports
+          path: build/reports/tests/
+
+      # Step 9: Save Screenshots
+      - name: Save Screenshots
+        uses: actions/upload-artifact@v3
+        with:
+          name: screenshots
+          path: build/screenshots/
+
+  notify-results:
+    needs: run-tests
+    runs-on: ubuntu-latest
+    if: failure()
+    steps:
+      # Notify on Failure
+      - name: Send Failure Notification
+        run: |
+          echo "Workflow failed. Notifying team..."
+          curl -X POST -H 'Content-type: application/json' \
+            --data '{"text": "The Appium test workflow failed. Check the Actions tab for details."}' \
+            https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK
