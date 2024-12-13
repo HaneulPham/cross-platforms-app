@@ -6,7 +6,6 @@ import io.appium.java_client.android.AndroidDriver;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Base64;
 
 public class VideoRecorder {
     private final AppiumDriver driver;
