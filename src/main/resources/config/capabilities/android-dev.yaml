@@ -1,6 +1,8 @@
-platformName: "Android"
-platformVersion: "12.0"
-deviceName: "Pixel_4"
-app: "/path/to/app.apk"
-automationName: "UiAutomator2"
+platformName: Android
+appium:
+  automationName: UiAutomator2
+  deviceName: "Pixel 8 Pro (Haneul) API 35"
+  appActivity: "com.ins.smarthomemini.presentation.app.MainActivity"
+  appPackage: "com.ins.smarthomemini.debug"
 isHeadless: true
+timeout: 30

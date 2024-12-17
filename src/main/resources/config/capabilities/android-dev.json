@@ -1,9 +1,8 @@
 {
   "platformName": "Android",
-  "platformVersion": "12.0",
-  "deviceName": "Pixel_4",
-  "app": "/path/to/app.apk",
-  "automationName": "UiAutomator2",
-  "isHeadless": true,
-  "timeout": 30
+  "appium:automationName": "UiAutomator2",
+  "appium:deviceName": "Pixel 8 Pro (Haneul) API 35",
+  "appium:appActivity": "com.ins.smarthomemini.presentation.app.MainActivity",
+  "appium:appPackage": "com.ins.smarthomemini.debug",
+  "appium:isHeadless": false
 }

@@ -27,6 +27,7 @@ public class AccessibilityUtils {
     }
 
     public static void main(String[] args) throws MalformedURLException {
+        CapabilitiesLoader capabilitiesLoader = new CapabilitiesLoader();
         // Set Desired Capabilities
         UiAutomator2Options options = new UiAutomator2Options();
         options.setPlatformName("Android");

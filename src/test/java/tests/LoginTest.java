@@ -19,7 +19,7 @@ public class LoginTest {
             // Create an instance of CapabilitiesLoader
             CapabilitiesLoader loader = new CapabilitiesLoader();
             driver = new AppiumDriver(
-                    new URL("http://localhost:4723/wd/hub"),
+                    new URL("http://localhost:4723"),
                     loader.loadCapabilities(platform, env)
             );
         } catch (MalformedURLException e) {
