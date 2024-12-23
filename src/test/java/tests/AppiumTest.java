@@ -2,9 +2,9 @@ package tests;
 
 import base.AppiumServerManager;
 import base.EmulatorManager;
+import base.EmulatorManagerOld;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
@@ -48,8 +48,13 @@ public class AppiumTest {
     protected EmulatorManager emulatorManager;
     @Test
     public void appiumTest1() {
-        emulatorManager = new EmulatorManager("/Library/Android/sdk","Pixel_8_Pro_Haneul_API_35_1");
-        emulatorManager.startEmulator();
+        // Provide your AVD name and fallback partial path
+        String avdName = "Pixel_8_Pro_Haneul_API_35_1";
+        String partialSdkPath = "/Library/Android/sdk";
+        emulatorManager = new EmulatorManager(avdName,partialSdkPath);
+//        emulatorManager.verifyAvdList();
+//        emulatorManager.ensureEmulatorPermissions();
+        emulatorManager.startEmulator(false, 180);
         appiumServerManager = new AppiumServerManager();
         appiumServerManager.startServer();
         System.out.println(appiumServerManager.getServerUrl());
