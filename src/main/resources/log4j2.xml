@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <!--
+        status="WARN" means Log4j2 itself will log only warnings or higher about its own config.
+        For debugging config issues, you could temporarily set status="DEBUG"
+    -->
+
+    <Appenders>
+        <!-- Console Appender -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <!-- File Appender -->
+        <File name="MyFileAppender" fileName="/path/to/mylogs/app.log" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <!-- You can define package-specific loggers here if you want different levels. -->
+
+        <!-- Root logger catches everything not handled by other loggers. -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="MyFileAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

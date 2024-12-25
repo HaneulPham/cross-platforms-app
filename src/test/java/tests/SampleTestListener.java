@@ -1,6 +1,7 @@
 package tests;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import org.testng.ITestContext;
 import org.testng.annotations.BeforeMethod;
@@ -20,7 +21,8 @@ public class SampleTestListener {
         options.setApp("/path/to/your/app.apk");
         options.setAutomationName("UiAutomator2");
 
-        driver = new AppiumDriver(new URL("http://localhost:4723/wd/hub"), options);
+        URL appiumServerUrl = new URL("http://127.0.0.1:4723");
+        AppiumDriver driver = new AndroidDriver(appiumServerUrl, options);
 
         // Store the driver in the TestNG context
         context.setAttribute("driver", driver);

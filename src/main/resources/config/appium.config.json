@@ -1,0 +1,130 @@
+{
+  "appium": {
+    "server": {
+      "host": "127.0.0.1",
+      "port": 4723,
+      "logLevel": "info",
+      "allowInsecure": ["execute_driver_script"],
+      "denyInsecure": [],
+      "usePlugins": ["images", "device-farm"]
+    },
+    "drivers": {
+      "xcuitest": {
+        "simulators": [
+          {
+            "automationName": "XCUITest",
+            "platformName": "iOS",
+            "platformVersion": "16.0",
+            "deviceName": "iPhone 14 Simulator",
+            "app": "/path/to/ios-simulator.app"
+          }
+        ],
+        "realDevices": [
+          {
+            "automationName": "XCUITest",
+            "platformName": "iOS",
+            "platformVersion": "16.0",
+            "deviceName": "iPhone 14",
+            "app": "/path/to/ios-real.app",
+            "udid": "auto",
+            "useNewWDA": true,
+            "wdaLocalPort": 8100,
+            "autoAcceptAlerts": true
+          }
+        ]
+      },
+      "uiautomator2": {
+        "emulators": [
+          {
+            "automationName": "UiAutomator2",
+            "platformName": "Android",
+            "platformVersion": "35",
+            "deviceName": "Pixel 8 Pro Haneul API 35",
+            "app": "/path/to/android-emulator.apk",
+            "appActivity": "com.ins.smarthomemini.presentation.app.MainActivity",
+            "appPackage": "com.ins.smarthomemini.debug",
+            "avd": "Pixel_8_Pro_Haneul_API_35_1"
+          }
+        ],
+        "realDevices": [
+          {
+            "automationName": "UiAutomator2",
+            "platformName": "Android",
+            "platformVersion": "13.0",
+            "deviceName": "Pixel 6",
+            "app": "/path/to/android-real.apk",
+            "udid": "1234567890abcdef",
+            "adbExecTimeout": 60000,
+            "systemPort": 8200
+          }
+        ]
+      }
+    },
+    "plugins": {
+      "images": {
+        "requireMatch": true,
+        "threshold": 0.1
+      },
+      "device-farm": {
+        "enabled": true,
+        "maxInstances": 5
+      }
+    },
+    "capabilities": {
+      "global": {
+        "noReset": true,
+        "fullReset": false,
+        "newCommandTimeout": 300
+      }
+    },
+    "parallel": {
+      "enabled": true,
+      "maxInstances": 10,
+      "strategy": "round-robin",
+      "devicePool": [
+        { "platformName": "iOS", "deviceName": "iPhone 12", "udid": "xxx1" },
+        { "platformName": "iOS", "deviceName": "iPhone 14", "udid": "xxx2" },
+        { "platformName": "Android", "deviceName": "Pixel Emulator", "avd": "Pixel_5_API_30" },
+        { "platformName": "Android", "deviceName": "Pixel 6", "systemPort": 8202 }
+      ]
+    },
+    "integrations": {
+      "testRail": {
+        "enabled": true,
+        "baseUrl": "https://testrail.mycompany.com",
+        "apiKey": "your-api-key-here",
+        "projectId": 123
+      },
+      "slack": {
+        "enabled": true,
+        "webhookUrl": "https://hooks.slack.com/services/your-webhook-url",
+        "notifyOnFailure": true
+      }
+    },
+    "sessionManagement": {
+      "reuseSessions": true,
+      "terminateOnFailure": false,
+      "maxSessionDuration": 3600
+    },
+    "testData": {
+      "userCredentials": {
+        "admin": { "username": "admin", "password": "admin123" },
+        "user": { "username": "user", "password": "user123" }
+      },
+      "dataPath": "./test-data"
+    },
+    "cloud": {
+      "provider": "BrowserStack",
+      "username": "your-username",
+      "accessKey": "your-access-key",
+      "hubUrl": "https://hub-cloud.browserstack.com/wd/hub"
+    },
+    "logging": {
+      "enableFileLogging": true,
+      "logFilePath": "./logs/appium.log",
+      "logLevel": "debug",
+      "jsonLogging": true,
+      "timestampFormat": "YYYY-MM-DD HH:mm:ss"
+    }
+  }
+}

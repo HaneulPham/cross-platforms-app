@@ -7,6 +7,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import utils.CapabilitiesLoader;
 
@@ -15,7 +16,25 @@ import java.net.URL;
 import java.time.Duration;
 
 public class AppiumTest {
-    public static void main(String[] args) {
+    protected AppiumServerManager appiumServerManager;
+    protected EmulatorManager emulatorManager;
+    @BeforeClass
+    public void startEmulator(){
+        // Provide your AVD name and fallback partial path
+        String avdName = "Pixel_8_Pro_Haneul_API_35_1";
+        String partialSdkPath = "/Library/Android/sdk";
+        emulatorManager = new EmulatorManager(avdName,partialSdkPath);
+//        emulatorManager.verifyAvdList();
+//        emulatorManager.ensureEmulatorPermissions();
+        emulatorManager.startEmulator(false, 180);
+        appiumServerManager = new AppiumServerManager();
+        appiumServerManager.startServer();
+        System.out.println(appiumServerManager.getServerUrl());
+    }
+    @Test
+    public void testLoadFromCapabilitiesLoader()
+
+    {
         // Define platform and environment
         String platform = "android"; // or "ios"
         String environment = "dev"; // or "prod"
@@ -26,7 +45,7 @@ public class AppiumTest {
             DesiredCapabilities capabilities = loader.loadCapabilities(platform, environment);
 
             // Define the Appium server URL
-            URL appiumServerUrl = new URL("http://localhost:4723/wd/hub");
+            URL appiumServerUrl = new URL("http://localhost:4723");
 
             // Initialize the driver based on the platform
             AppiumDriver driver;
@@ -44,20 +63,8 @@ public class AppiumTest {
             throw new RuntimeException("Failed to initialize Appium driver!", e);
         }
     }
-    protected AppiumServerManager appiumServerManager;
-    protected EmulatorManager emulatorManager;
     @Test
     public void appiumTest1() {
-        // Provide your AVD name and fallback partial path
-        String avdName = "Pixel_8_Pro_Haneul_API_35_1";
-        String partialSdkPath = "/Library/Android/sdk";
-        emulatorManager = new EmulatorManager(avdName,partialSdkPath);
-//        emulatorManager.verifyAvdList();
-//        emulatorManager.ensureEmulatorPermissions();
-        emulatorManager.startEmulator(false, 180);
-        appiumServerManager = new AppiumServerManager();
-        appiumServerManager.startServer();
-        System.out.println(appiumServerManager.getServerUrl());
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("appium:automationName", "UiAutomator2");
@@ -84,11 +91,6 @@ public class AppiumTest {
         } catch (Exception e) {
             throw new RuntimeException("Failed to initialize Appium driver!", e);
         }
-    }
-    @Test
-    public void test2(){
-        LoginTest loginTest = new LoginTest();
-        loginTest.setup("android","dev");
     }
     @AfterClass
     public void closeAppium(){

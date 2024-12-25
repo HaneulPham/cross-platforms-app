@@ -1,1 +1,0 @@
-{"uuid":"c526002f-506d-4894-b269-b9a8f4e1b188","name":"tests.AppiumTest","children":["6dae7bc9-7a16-4ca3-9ee9-4ed6773acfa5"],"befores":[],"afters":[{"name":"closeAppium","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1734964755258,"stop":1734964755265}],"start":1734964697529,"stop":1734964755270}

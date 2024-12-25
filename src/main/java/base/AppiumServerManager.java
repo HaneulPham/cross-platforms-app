@@ -3,8 +3,12 @@ package base;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class AppiumServerManager {
+    private static final Logger logger = LoggerFactory.getLogger(AppiumServerManager.class);
     private AppiumDriverLocalService service;
 
     /**
@@ -13,13 +17,15 @@ public class AppiumServerManager {
      * Approach A: Build the Service in the Constructor
      */
     public AppiumServerManager() {
+        logger.info("Initializing AppiumServerManager...");
         this.service = new AppiumServiceBuilder()
-                .withIPAddress("127.0.0.1")// Specify the IP address
-                .usingPort(4723) // Specify the port
+                .withIPAddress("127.0.0.1") // Specify the IP address
+                .usingPort(4723)           // Specify the port
 //                .usingAnyFreePort()
                 .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
                 .withArgument(GeneralServerFlag.LOG_LEVEL, "info")
                 .build();
+        logger.info("AppiumServiceBuilder configured.");
     }
 
     /**
@@ -27,10 +33,11 @@ public class AppiumServerManager {
      */
     public void startServer() {
         if (service == null || !service.isRunning()) {
+            assert service != null;
             service.start();
-            System.out.println("Appium REST http interface listener started on " + service.getUrl());
+            logger.info("Appium REST http interface listener started on " + service.getUrl());
         } else {
-            System.out.println("Appium Server is already running at: " + service.getUrl());
+            logger.warn("Appium Server is already running at: " + service.getUrl());
         }
     }
 
@@ -39,16 +46,16 @@ public class AppiumServerManager {
      */
     public void startService() {
         if (service == null) {
+            logger.info("Building the default Appium service...");
             service = AppiumDriverLocalService.buildDefaultService();
         }
         if (!service.isRunning()) {
             service.start();
-            System.out.println("Appium server started at: " + service.getUrl());
+            logger.info("Appium server started at: " + service.getUrl());
         } else {
-            System.out.println("Appium server is already running at: " + service.getUrl());
+            logger.warn("Appium server is already running at: " + service.getUrl());
         }
     }
-
 
     /**
      * Stops the Appium server if it is running.
@@ -56,9 +63,9 @@ public class AppiumServerManager {
     public void stopServer() {
         if (service != null && service.isRunning()) {
             service.stop();
-            System.out.println("Appium Server Stopped.");
+            logger.info("Appium Server Stopped.");
         } else {
-            System.out.println("Appium Server is not running, no need to stop.");
+            logger.warn("Appium Server is not running, no need to stop.");
         }
     }
 
@@ -67,8 +74,10 @@ public class AppiumServerManager {
      */
     public String getServerUrl() {
         if (service != null && service.isRunning()) {
+            logger.info("Returning Appium server URL: " + service.getUrl());
             return service.getUrl().toString();
         }
+        logger.warn("Appium server is not running, no URL to return.");
         return null;
     }
 
@@ -78,12 +87,12 @@ public class AppiumServerManager {
 
         // Start the server
         serverManager.startServer();
+        serverManager.startService();
 
-        // ... Your test logic here ...
-        // For demonstration, let's pretend we run some tests and then stop the server.
+        // Your test logic here
+        logger.info("Appium server is running. You can proceed with your tests.");
 
         // Stop the server after done
-//        serverManager.stopServer();
+        // serverManager.stopServer();
     }
 }
-

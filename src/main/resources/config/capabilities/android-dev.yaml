@@ -1,8 +1,6 @@
-platformName: Android
-appium:
-  automationName: UiAutomator2
-  deviceName: "Pixel 8 Pro (Haneul) API 35"
-  appActivity: "com.ins.smarthomemini.presentation.app.MainActivity"
-  appPackage: "com.ins.smarthomemini.debug"
-isHeadless: true
-timeout: 30
+platformName: "Android"
+appium:automationName: "UiAutomator2"
+appium:deviceName: "Pixel 8 Pro (Haneul) API 35"
+appium:appActivity: "com.ins.smarthomemini.presentation.app.MainActivity"
+appium:appPackage: "com.ins.smarthomemini.debug"
+appium:isHeadless: false
